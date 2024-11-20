@@ -3,13 +3,14 @@ package common
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/fatih/color"
 	"io"
 	"log"
 	"os"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/fatih/color"
 )
 
 var Num int64
@@ -114,10 +115,14 @@ func WriteFile(result string, filename string) {
 }
 
 func LogError(errinfo interface{}) {
+	if Silent {
+		return
+	}
+
 	if WaitTime == 0 {
-		fmt.Printf("已完成 %v/%v %v \n", End, Num, errinfo)
+		//fmt.Printf("已完成 %v/%v %v \n", End, Num, errinfo)
 	} else if (time.Now().Unix()-LogSucTime) > WaitTime && (time.Now().Unix()-LogErrTime) > WaitTime {
-		fmt.Printf("已完成 %v/%v %v \n", End, Num, errinfo)
+		//fmt.Printf("已完成 %v/%v %v \n", End, Num, errinfo)
 		LogErrTime = time.Now().Unix()
 	}
 }

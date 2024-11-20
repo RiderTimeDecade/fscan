@@ -2,16 +2,17 @@ package Plugins
 
 import (
 	"fmt"
-	"github.com/shadow1ng/fscan/WebScan/lib"
-	"github.com/shadow1ng/fscan/common"
 	"reflect"
 	"strconv"
 	"strings"
 	"sync"
+
+	"github.com/shadow1ng/fscan/WebScan/lib"
+	"github.com/shadow1ng/fscan/common"
 )
 
 func Scan(info common.HostInfo) {
-	fmt.Println("start infoscan")
+	// fmt.Println("\033[1;36m[*] start infoscan\033[0m")
 	Hosts, err := common.ParseIP(info.Host, common.HostFile, common.NoHosts)
 	if err != nil {
 		fmt.Println("len(hosts)==0", err)
