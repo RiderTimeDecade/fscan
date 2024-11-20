@@ -199,7 +199,7 @@ arch用户安装
 # 6. 404StarLink 2.0 - Galaxy
 ![](https://github.com/knownsec/404StarLink-Project/raw/master/logo.png)
 
-fscan 是 404Team [星链计划2.0](https://github.com/knownsec/404StarLink2.0-Galaxy) 中的一环，如果对fscan 有任何疑问又或是想要找小伙伴交流，可以参考星链计划的加群方式。
+fscan 是 404Team [星链计划2.0](https://github.com/knownsec/404StarLink2.0-Galaxy) 中的一环，如�����fscan 有任何疑问又或是想要找小伙伴交流，可以参考星链计划的加群方式。
 
 - [https://github.com/knownsec/404StarLink2.0-Galaxy#community](https://github.com/knownsec/404StarLink2.0-Galaxy#community)
 
@@ -219,15 +219,41 @@ https://github.com/jjf012/gopoc
 
 
 # 10. 最近更新
-[+] 2024/1/1 优化用户名和密码字典，增加更多常见组合。增强服务识别准确性。  
+[+] 2024/11/20 全面增强字典功能：
+  - 用户名字典全面升级：
+    * 扩充服务专用账户（FTP、MySQL、MSSQL、PostgreSQL等）
+    * 新增云服务账户（EC2、Azure、阿里云等）
+    * 完善域环境用户组合（administrator.domain等）
+    * 增加运维账户（devops、operation等）
+    * 补充开发测试账户（developer、test等）
+    * 新增备份账户系列（backup、ftpbackup等）
+    * 添加服务管理账户（webmaster、dbadmin等）
+
+  - 密码字典全面优化：
+    * 新增2024年相关组合
+    * 增强特殊字符组合密码
+    * 完善服务默认密码
+    * 补充云服务默认密码
+    * 添加季节性密码组合
+    * 优化密码复杂度覆盖
+    * 新增多种密码变种
+
 [+] 2023/11/13 加入控制台颜色输出(-nocolor)、保存文件json结构(-json)、修改tls最低版本为1.0、端口分组(-p db,web,service)。  
+
 [+] 2023/10/1 优化扫描性能，提升扫描速度。增加更多Web指纹。  
+
 [+] 2023/8/15 增加更多POC，完善漏洞扫描功能。优化内存使用。  
+
 [+] 2023/6/20 增强域控识别功能，改进NetBIOS探测。  
+
 [+] 2023/4/10 改进服务识别模块，提高准确率。优化扫描逻辑。  
+
 [+] 2023/2/1 增加更多数据库类型支持，完善爆破功能。  
+
 [+] 2022/11/19 加入hash碰撞、wmiexec无回显命令执行。  
+
 [+] 2022/7/14 -hf 支持host:port和host/xx:port格式,rule.Search 正则匹配范围从body改成header+body,-nobr不再包含-nopoc。优化webtitle 输出格式。  
+
 [+] 2022/7/6 加入手工gc回收,尝试节省无用内存。-url 支持逗号隔开。修复一个poc模块bug。-nobr不再包含-nopoc。  
 
 [url-docen]: README_EN.md
