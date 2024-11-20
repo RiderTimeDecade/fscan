@@ -199,7 +199,7 @@ arch用户安装
 # 6. 404StarLink 2.0 - Galaxy
 ![](https://github.com/knownsec/404StarLink-Project/raw/master/logo.png)
 
-fscan 是 404Team [星链计划2.0](https://github.com/knownsec/404StarLink2.0-Galaxy) 中的一环，如�����fscan 有任何疑问又或是想要找小伙伴交流，可以参考星链计划的加群方式。
+fscan 是 404Team [星链计划2.0](https://github.com/knownsec/404StarLink2.0-Galaxy) 中的一环，如fscan 有任何疑问又或是想要找小伙伴交流，可以参考星链计划的加群方式。
 
 - [https://github.com/knownsec/404StarLink2.0-Galaxy#community](https://github.com/knownsec/404StarLink2.0-Galaxy#community)
 
@@ -219,7 +219,13 @@ https://github.com/jjf012/gopoc
 
 
 # 10. 最近更新
-[+] 2024/11/20 全面增强字典功能：
+[+] 2024/11/20 全面优化工具界面和功能：
+  - 用户界面优化：
+    * 全新的启动 Banner 设计
+    * 增加控制台彩色输出支持
+    * 改进命令行参数分组和说明
+    * 优化帮助信息的可读性
+    
   - 用户名字典全面升级：
     * 扩充服务专用账户（FTP、MySQL、MSSQL、PostgreSQL等）
     * 新增云服务账户（EC2、Azure、阿里云等）
@@ -237,6 +243,13 @@ https://github.com/jjf012/gopoc
     * 添加季节性密码组合
     * 优化密码复杂度覆盖
     * 新增多种密码变种
+
+  - 参数系统改进：
+    * 重新组织命令行参数分类
+    * 增加更详细的参数说明
+    * 添加使用示例
+    * 优化参数命名和描述
+    * 改进帮助信息格式
 
 [+] 2023/11/13 加入控制台颜色输出(-nocolor)、保存文件json结构(-json)、修改tls最低版本为1.0、端口分组(-p db,web,service)。  
 

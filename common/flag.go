@@ -2,71 +2,82 @@ package common
 
 import (
 	"flag"
+	"fmt"
 )
 
 func Banner() {
 	banner := `
-   ___                              _    
-  / _ \     ___  ___ _ __ __ _  ___| | __ 
- / /_\/____/ __|/ __| '__/ _` + "`" + ` |/ __| |/ /
-/ /_\\_____\__ \ (__| | | (_| | (__|   <    
-\____/     |___/\___|_|  \__,_|\___|_|\_\   
-                     fscan version: ` + version + `
+    ______                        
+   / ____/______________ ___  ___ 
+  / /_  / ___/ ___/ __ '__ \/ _ \
+ / __/ (__  ) /__/ / / / / /  __/
+/_/   /____/\___/_/ /_/ /_/\___/ 
+                                
+    A fast all-in-one intranet scanning tool.
+    
+    Version: %s
+    Author:  shadow1ng
+    Github:  https://github.com/shadow1ng/fscan
+
+    Use -h for help, or visit: https://github.com/shadow1ng/fscan#readme
+    
 `
-	print(banner)
+	if !Nocolor {
+		banner = fmt.Sprintf("\033[36m%s\033[0m", banner) // 使用青色
+	}
+	fmt.Printf(banner, version)
 }
 
 func Flag(Info *HostInfo) {
 	Banner()
-	flag.StringVar(&Info.Host, "h", "", "IP address of the host you want to scan,for example: 192.168.11.11 | 192.168.11.11-255 | 192.168.11.11,192.168.11.12")
-	flag.StringVar(&NoHosts, "hn", "", "the hosts no scan,as: -hn 192.168.1.1/24")
-	flag.StringVar(&Ports, "p", DefaultPorts, "Select a port,for example: 22 | 1-65535 | 22,80,3306")
-	flag.StringVar(&PortAdd, "pa", "", "add port base DefaultPorts,-pa 3389")
-	flag.StringVar(&UserAdd, "usera", "", "add a user base DefaultUsers,-usera user")
-	flag.StringVar(&PassAdd, "pwda", "", "add a password base DefaultPasses,-pwda password")
-	flag.StringVar(&NoPorts, "pn", "", "the ports no scan,as: -pn 445")
-	flag.StringVar(&Command, "c", "", "exec command (ssh|wmiexec)")
-	flag.StringVar(&SshKey, "sshkey", "", "sshkey file (id_rsa)")
-	flag.StringVar(&Domain, "domain", "", "smb domain")
-	flag.StringVar(&Username, "user", "", "username")
-	flag.StringVar(&Password, "pwd", "", "password")
-	flag.Int64Var(&Timeout, "time", 3, "Set timeout")
-	flag.StringVar(&Scantype, "m", "all", "Select scan type ,as: -m ssh")
-	flag.StringVar(&Path, "path", "", "fcgi、smb romote file path")
-	flag.IntVar(&Threads, "t", 600, "Thread nums")
-	flag.IntVar(&LiveTop, "top", 10, "show live len top")
-	flag.StringVar(&HostFile, "hf", "", "host file, -hf ip.txt")
-	flag.StringVar(&Userfile, "userf", "", "username file")
-	flag.StringVar(&Passfile, "pwdf", "", "password file")
-	flag.StringVar(&Hashfile, "hashf", "", "hash file")
-	flag.StringVar(&PortFile, "portf", "", "Port File")
-	flag.StringVar(&PocPath, "pocpath", "", "poc file path")
-	flag.StringVar(&RedisFile, "rf", "", "redis file to write sshkey file (as: -rf id_rsa.pub)")
-	flag.StringVar(&RedisShell, "rs", "", "redis shell to write cron file (as: -rs 192.168.1.1:6666)")
-	flag.BoolVar(&NoPoc, "nopoc", false, "not to scan web vul")
-	flag.BoolVar(&IsBrute, "nobr", false, "not to Brute password")
-	flag.IntVar(&BruteThread, "br", 1, "Brute threads")
-	flag.BoolVar(&NoPing, "np", false, "not to ping")
-	flag.BoolVar(&Ping, "ping", false, "using ping replace icmp")
-	flag.StringVar(&Outputfile, "o", "result.txt", "Outputfile")
-	flag.BoolVar(&TmpSave, "no", false, "not to save output log")
-	flag.Int64Var(&WaitTime, "debug", 60, "every time to LogErr")
-	flag.BoolVar(&Silent, "silent", false, "silent scan")
-	flag.BoolVar(&Nocolor, "nocolor", false, "no color")
-	flag.BoolVar(&PocFull, "full", false, "poc full scan,as: shiro 100 key")
-	flag.StringVar(&URL, "u", "", "url")
-	flag.StringVar(&UrlFile, "uf", "", "urlfile")
-	flag.StringVar(&Pocinfo.PocName, "pocname", "", "use the pocs these contain pocname, -pocname weblogic")
-	flag.StringVar(&Proxy, "proxy", "", "set poc proxy, -proxy http://127.0.0.1:8080")
-	flag.StringVar(&Socks5Proxy, "socks5", "", "set socks5 proxy, will be used in tcp connection, timeout setting will not work")
-	flag.StringVar(&Cookie, "cookie", "", "set poc cookie,-cookie rememberMe=login")
-	flag.Int64Var(&WebTimeout, "wt", 5, "Set web timeout")
-	flag.BoolVar(&DnsLog, "dns", false, "using dnslog poc")
-	flag.IntVar(&PocNum, "num", 20, "poc rate")
-	flag.StringVar(&SC, "sc", "", "ms17 shellcode,as -sc add")
-	flag.BoolVar(&IsWmi, "wmi", false, "start wmi")
-	flag.StringVar(&Hash, "hash", "", "hash")
-	flag.BoolVar(&Noredistest, "noredis", false, "no redis sec test")
-	flag.BoolVar(&JsonOutput, "json", false, "json output")
+
+	// 将参数分组，使其更有条理
+	// 基本选项
+	flag.StringVar(&Info.Host, "h", "", "Target host(s). Supports: IP, CIDR, Range.\n\tExample: 192.168.1.1, 192.168.1.1/24, 192.168.1.1-255")
+	flag.StringVar(&NoHosts, "hn", "", "Hosts to exclude from scan\n\tExample: -hn 192.168.1.1/24")
+	flag.StringVar(&Ports, "p", DefaultPorts, "Target port(s). Supports: Port, Range, List\n\tExample: 22, 1-65535, 22,80,3306")
+	flag.StringVar(&PortAdd, "pa", "", "Add additional ports to default port list\n\tExample: -pa 3389")
+
+	// 认证选项
+	flag.StringVar(&Username, "user", "", "Username for authentication")
+	flag.StringVar(&Password, "pwd", "", "Password for authentication")
+	flag.StringVar(&UserAdd, "usera", "", "Add additional username to default list")
+	flag.StringVar(&PassAdd, "pwda", "", "Add additional password to default list")
+	flag.StringVar(&Domain, "domain", "", "Domain for SMB authentication")
+	flag.StringVar(&Hash, "hash", "", "Hash for authentication")
+
+	// 扫描控制
+	flag.StringVar(&Scantype, "m", "all", "Scan module selection\n\tExample: -m ssh,smb,web")
+	flag.IntVar(&Threads, "t", 600, "Number of concurrent threads")
+	flag.Int64Var(&Timeout, "time", 3, "Timeout in seconds")
+	flag.Int64Var(&WebTimeout, "wt", 5, "Web timeout in seconds")
+	flag.BoolVar(&NoPing, "np", false, "Skip ping detection")
+	flag.BoolVar(&Ping, "ping", false, "Use ping instead of ICMP")
+
+	// 文件操作
+	flag.StringVar(&HostFile, "hf", "", "Import targets from file")
+	flag.StringVar(&Userfile, "userf", "", "Import usernames from file")
+	flag.StringVar(&Passfile, "pwdf", "", "Import passwords from file")
+	flag.StringVar(&Outputfile, "o", "result.txt", "Output file path")
+
+	// 代理设置
+	flag.StringVar(&Proxy, "proxy", "", "HTTP proxy for POC scanning\n\tExample: http://127.0.0.1:8080")
+	flag.StringVar(&Socks5Proxy, "socks5", "", "Socks5 proxy for TCP connections")
+
+	// 特殊功能
+	flag.StringVar(&Command, "c", "", "Command to execute (ssh|wmiexec)")
+	flag.StringVar(&RedisFile, "rf", "", "Redis public key file\n\tExample: -rf id_rsa.pub")
+	flag.StringVar(&RedisShell, "rs", "", "Redis shell command\n\tExample: -rs 192.168.1.1:6666")
+
+	// 输出控制
+	flag.BoolVar(&Silent, "silent", false, "Silent mode, no banner")
+	flag.BoolVar(&Nocolor, "nocolor", false, "Disable colored output")
+	flag.BoolVar(&JsonOutput, "json", false, "Output in JSON format")
+
+	// POC相关
+	flag.BoolVar(&NoPoc, "nopoc", false, "Skip web vulnerability scanning")
+	flag.StringVar(&PocPath, "pocpath", "", "Custom POC file path")
+	flag.StringVar(&Pocinfo.PocName, "pocname", "", "Specify POC by name\n\tExample: -pocname weblogic")
+
 	flag.Parse()
 }
